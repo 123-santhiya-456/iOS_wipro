@@ -19,4 +19,4 @@ print(type(of: cgpa))
 print(type(of: isHosteller)) 
 
 
-https://github.com/123-santhiya-456/iOS_wipro.git
+
