@@ -1,52 +1,47 @@
+import Foundation
 
-// 1. Enum
 enum BookStatus {
     case available
-    case borrowed(by: String, dueIns: Int)
+    case borrowed(by: String, dueIn: Int)
     case reserved(for: String)
-
+    
     var label: String {
         switch self {
         case .available:
-            return "Available"
-        case .borrowed(let name, let days):
-            return "Borrowed by \(name), Due in \(days) days"
-        case .reserved(let name):
-            return "Reserved for \(name)"
+            return "Available on shelf"
+        case .borrowed(let borrower, let days):
+            return "Borrowed by \(borrower) (due in \(days) days)"
+        case .reserved(let memberName):
+            return "Reserved for \(memberName)"
         }
     }
 }
 
-// 3. Struct
 struct Book {
     var title: String
     var status: BookStatus = .available
 }
 
-// 4. Class
 class Member {
     var name: String
-    var borrowedBooks: [String] = []
-
+    var borrowedBooks: [Book] = []
+    
     init(name: String) {
         self.name = name
     }
 }
 
-// 5. Copy Book
-var book1 = Book(title: "Swift")
-var book2 = book1
+let book1 = Book(title: "The Swift Programming Language")
+var book2 = book1 
+book2.status = .borrowed(by: "Karthika", dueIn: 7)
 
-book2.status = .borrowed(by: "Santhiya", dueIns: 5)
+print("Book 1: \(book1.title) -> \(book1.status.label)") 
+print("Book 2: \(book2.title) -> \(book2.status.label)") 
 
-print(book1.status.label)
-print(book2.status.label)
+let member1 = Member(name: "Sandy")
+let member2 = member1 
+member2.name = "Santhiya"
+member2.borrowedBooks.append(book2)
 
-// 6. Copy Member
-let member1 = Member(name: "Santhiya")
-let member2 = member1
-
-member2.name = "Priya"
-
-print(member1.name)
-print(member2.name)
+print("Member 1 name: \(member1.name) | Books: \(member1.borrowedBooks.count)") 
+print("Member 2 name: \(member2.name) | Books: \(member2.borrowedBooks.count)")
